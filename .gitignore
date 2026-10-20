@@ -1,0 +1,27 @@
+# ===== Unreal Engine 生成目录(可由工程重新生成,不入库) =====
+Binaries/
+DerivedDataCache/
+Intermediate/
+Saved/
+
+# ===== Visual Studio / IDE =====
+.vs/
+.vscode/
+.idea/
+*.sln
+*.suo
+*.user
+*.VC.db
+*.VC.opendb
+*.opensdf
+*.opendb
+*.sdf
+
+# ===== 个人文档 / 临时文件(非工程内容) =====
+Temp.txt
+简历项目介绍.md
+
+# ===== 操作系统垃圾文件 =====
+Thumbs.db
+Desktop.ini
+.DS_Store

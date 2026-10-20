@@ -1,0 +1,17 @@
+﻿Key,SourceString
+Buff_CoinBuff_Description,金币获取翻倍，持续 60 秒
+Buff_CoinBuff_DisplayName,招财
+Buff_SpeedBuff_Description,移动速度提升 50%，持续 30 秒
+Buff_SpeedBuff_DisplayName,疾跑
+Item_Coin_Description,通用货币，作为背包中的一个物品存放，可用于抽卡等消费。
+Item_Coin_DisplayName,金币
+Item_Dagger_Description,这是一把匕首
+Item_Dagger_DisplayName,匕首
+Item_Test_Item_Description,用于验证背包堆叠/拆堆逻辑的示例物品，可在编辑器目录中删除。
+Item_Test_Item_DisplayName,测试物品
+Skill_Fortune_Description,财运：金币获取翻倍，持续 60 秒。
+Skill_Fortune_DisplayName,财运亨通
+Skill_HealPulse_Description,瞬间回复生命（数值 50，需覆写 ApplyInstantEffect 蓝图事件落地回血）。
+Skill_HealPulse_DisplayName,治愈脉冲
+Skill_SpeedDash_Description,冲刺：移动速度提升 50%，持续 30 秒。
+Skill_SpeedDash_DisplayName,疾风冲刺
