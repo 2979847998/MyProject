@@ -14,6 +14,30 @@
 - **存档系统**:背包 / 装备 / 设置三套 SaveGame,兼容旧版本存档数据迁移
 - **数据驱动**:物品 / Buff / 技能以 Data Asset 目录配置,展示文本走 CSV 字符串表本地化
 
+## 技术亮点
+
+- **组件化架构**:属性 / Buff / 技能 / 背包 / 装备 / 抽卡 / UI 管理均为 ActorComponent 挂载于 PlayerController,彼此通过动态多播委托通信,UI 与玩法逻辑零直接依赖;
+- **自研 UI 框架**:五层 Z 序面板栈 + 面板缓存复用 + 输入模式与暂停统一调度;装备面板直接用 WidgetTree 在 C++ 中动态构建,无需蓝图 WBP;
+- **运行时键位重绑**:克隆资产 IMC 到运行时上下文并重建映射,设置页改键即时生效,并处理同键冲突互斥;
+- **数据驱动 + 本地化**:物品 / Buff / 技能以 Data Asset 目录配置,展示文本走 CSV 字符串表;
+- **内存安全**:跨对象动态委托在 NativeDestruct / EndPlay 显式解绑,静态目录缓存按强 / 弱指针选型,规避 GC 后悬垂访问;
+- **性能治理**:无逻辑组件关闭 Tick、空闲自动停 Tick、UI 增量刷新与控件复用(消除每秒重建)、热路径缓存、存档写入零冗余读盘;全量编译 0 错误 0 警告。
+
+## 核心代码导览
+
+| 模块 | 代码位置 |
+| --- | --- |
+| 属性 / 受击 / 死亡 | [`AttributeComponent.cpp`](Source/MyProject/Private/AttributeComponent.cpp) · [`AMyEnemyBase.cpp`](Source/MyProject/Private/AMyEnemyBase.cpp) |
+| Buff 系统(计时 / 叠加 / 数值汇总) | [`BuffsComponent.cpp`](Source/MyProject/Private/BuffsComponent.cpp) · [`BuffCatalog.cpp`](Source/MyProject/Private/BuffCatalog.cpp) |
+| 技能系统(冷却 / 能量 / 效果) | [`SkillsComponent.cpp`](Source/MyProject/Private/SkillsComponent.cpp) · [`SkillCatalog.cpp`](Source/MyProject/Private/SkillCatalog.cpp) |
+| 背包数据与存档 | [`InventoryData.cpp`](Source/MyProject/Private/InventoryData.cpp) · [`InventoryComponent.cpp`](Source/MyProject/Private/InventoryComponent.cpp) |
+| 装备加成与挂载 | [`EquipmentComponent.cpp`](Source/MyProject/Private/EquipmentComponent.cpp) |
+| 抽卡 | [`GachaComponent.cpp`](Source/MyProject/Private/GachaComponent.cpp) |
+| UI 框架 / 面板栈管理 | [`UIManagerComponent.cpp`](Source/MyProject/Private/UIManagerComponent.cpp) · [`UIViewBase.cpp`](Source/MyProject/Private/UIViewBase.cpp) |
+| HUD 与各界面控件 | [`UIHUDWidget.cpp`](Source/MyProject/Private/UIHUDWidget.cpp) · [`InventoryWidget.cpp`](Source/MyProject/Private/InventoryWidget.cpp) · [`EquipmentWidget.cpp`](Source/MyProject/Private/EquipmentWidget.cpp) |
+| 输入 / 点击移动 | [`MyPlayerController.cpp`](Source/MyProject/Private/MyPlayerController.cpp) |
+| 设置子系统 / 键位重绑 | [`USettingsSubsystem.cpp`](Source/MyProject/Private/USettingsSubsystem.cpp) |
+
 ## 环境要求
 
 - Unreal Engine **5.7**(开发版本 5.7.4)
